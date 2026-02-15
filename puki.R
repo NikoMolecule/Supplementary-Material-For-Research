@@ -10,28 +10,18 @@ library(gridExtra)
 library(bio3d)
 
 plot_tree <- function(tree_plot, title_plot, max_x) {
-  # 1. Ladderize helps sort branches visually so it looks less chaotic
   g <- ggtree(tree_plot, colour = "#444444", size = 0.6, ladderize = TRUE) +
     
-    # 2. Add Tip Labels (Aligned nicely to the right with dotted lines)
-    # size=3 is standard for papers. 'linesize' adds the dotted connector.
     geom_tiplab(size = 3, colour = "black", align = TRUE, linesize = 0.3) +
     
-    # 3. Add Nodes (Smaller dots, less distracting color)
     geom_nodepoint(size = 2, colour = "#c7254e", alpha = 0.8) +
     
-    # 4. The Scale Bar (This replaces the messy branch numbers)
-    # It adds a ruler at the bottom showing substitution rate.
     theme_tree2() + 
     
-    # 5. Dynamic Limits
-    # We use the user's max_x, but let the Y-axis scale automatically
     xlim(0, max_x) +
     
-    # 6. Clean Title
     labs(title = title_plot) +
     
-    # 7. Margins to prevent cutting off text
     theme(
       plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
       plot.margin = margin(t = 20, r = 20, b = 20, l = 10, unit = "pt"),
@@ -193,6 +183,7 @@ g1 = ggplot(color_data, aes(x = x, y = y, fill = colors)) +
                           axis.title.y = element_blank(),
                           panel.grid = element_blank()) 
 g1 = g1 + guides(fill = "none")
+
 
 
 grid.arrange(g, g1, nrow = 2, ncol = 1, heights = c(0.8, 0.2))
